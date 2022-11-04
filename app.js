@@ -7,7 +7,6 @@ const blogRouter = require('./routes/blogs');
 require('./middleware/authentication');
 require('express-async-errors');
 const errorHandler = require('./middleware/errorHandler');
-const localServer = 'mongodb://localhost:27017/blog';
 
 const PORT = 3000;
 app.use(express.json());
@@ -27,19 +26,15 @@ app.use((req, res) => {
 app.use(errorHandler);
 
 async function start() {
-  await mongoose.connect(localServer);
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
 
-  mongoose.connection.on('connected', () => {
-    console.log('Mongo db has been connected');
-  });
-
-  mongoose.connection.on('error', (err) => {
-    console.log('An error has occured in the mongo server', err);
-  });
-
-  app.listen(PORT, () => {
-    console.log('server is listening on port', PORT);
-  });
+    app.listen(PORT, () => {
+      console.log('server is listening on port', PORT);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 start();
