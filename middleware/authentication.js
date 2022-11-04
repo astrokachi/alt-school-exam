@@ -1,0 +1,89 @@
+const passport = require('passport');
+const JwtStrategy = require('passport-jwt').Strategy,
+  ExtractJwt = require('passport-jwt').ExtractJwt;
+const LocalStrategy = require('passport-local').Strategy;
+const User = require('../models/User');
+const UnauthorizedError = require('../errors/unauthorized');
+
+const jwtSecret = process.env.JWT_SECRET;
+
+var opts = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = jwtSecret;
+
+passport.use(
+  new JwtStrategy(opts, async function (jwt_payload, done) {
+    // User.findOne({ id: jwt_payload.userId }, function (err, user) {
+    try {
+      if (jwt_payload) {
+        return done(null, jwt_payload);
+      } else {
+        return done(null, false);
+        // or you could create a new account
+      }
+    } catch (error) {
+      done(error);
+    }
+
+    // });
+  })
+);
+
+passport.use(
+  'signup',
+  new LocalStrategy(
+    {
+      passReqToCallback: true,
+      usernameField: 'email',
+      passwordField: 'password',
+    },
+    async (req, username, password, done) => {
+      try {
+        const user = await User.create({
+          ...req.body,
+          email: username,
+          password: password,
+        });
+        if (!user) {
+          const error = new UnauthorizedError('User already exists');
+          return done(error);
+        }
+        return done(null, { user, token: user.createJWT() });
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
+
+passport.use(
+  'login',
+  new LocalStrategy(
+    { usernameField: 'email', passwordField: 'password' },
+    async (username, password, done) => {
+      try {
+        if (!username || !password) {
+          const error = new UnauthorizedError('Invalid Password or email');
+          return done(error);
+        }
+        const user = await User.findOne({ username });
+        if (!user) {
+          const error = new UnauthorizedError('user does not exist');
+          return done(error);
+        }
+
+        const checkPassword = await user.comparePassword(password);
+        console.log(checkPassword);
+        if (!checkPassword) {
+          const error = new UnauthorizedError('Incorrect Password');
+          err.msg = 'Incorrect Password';
+          return done(error);
+        }
+
+        return done(null, { user, token: user.createJWT() });
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
