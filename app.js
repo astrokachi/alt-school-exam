@@ -12,6 +12,7 @@ const localServer = 'mongodb://localhost:27017/blog';
 const PORT = 3000;
 app.use(express.json());
 
+////////////////////////////////////////////// 0.041667d /////////////////////////////////////////////////////////////
 app.use('/auth', authRouter);
 app.use('/blogs', blogRouter);
 

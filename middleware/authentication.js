@@ -3,7 +3,7 @@ const JwtStrategy = require('passport-jwt').Strategy,
   ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
-const UnauthorizedError = require('../errors/unauthorized');
+const { Unauthorized } = require('../errors/unauthorized');
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -45,7 +45,7 @@ passport.use(
           password: password,
         });
         if (!user) {
-          const error = new UnauthorizedError('User already exists');
+          const error = new Unauthorized('User already exists');
           return done(error);
         }
         return done(null, { user, token: user.createJWT() });
@@ -59,31 +59,31 @@ passport.use(
 passport.use(
   'login',
   new LocalStrategy(
-    { usernameField: 'email', passwordField: 'password' },
-    async (username, password, done) => {
-      try {
-        if (!username || !password) {
-          const error = new UnauthorizedError('Invalid Password or email');
-          return done(error);
-        }
-        const user = await User.findOne({ username });
-        if (!user) {
-          const error = new UnauthorizedError('user does not exist');
-          return done(error);
-        }
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true,
+    },
+    function (req, email, password, done) {
+      if (email) email = email.toLowerCase();
 
-        const checkPassword = await user.comparePassword(password);
-        console.log(checkPassword);
-        if (!checkPassword) {
-          const error = new UnauthorizedError('Incorrect Password');
-          err.msg = 'Incorrect Password';
-          return done(error);
-        }
+      process.nextTick(function () {
+        User.findOne({ email: email }, function (err, user) {
+          if (err) return done(err);
 
-        return done(null, { user, token: user.createJWT() });
-      } catch (error) {
-        done(error);
-      }
+          if (!user) {
+            const error = new Unauthorized();
+            error.message = 'User not found';
+            return done(error);
+          }
+
+          if (!user.comparePassword(password)) {
+            const error = new Unauthorized();
+            error.message = 'Invalid password';
+            return done(error);
+          } else return done(null, { user, token: user.createJWT() });
+        });
+      });
     }
   )
 );
