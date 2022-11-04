@@ -8,6 +8,7 @@ const {
   updateBlogPost,
   deleteBlogPost,
   getBlog,
+  getMyBlogs,
 } = require('../controllers/blogs');
 
 blogRouter
@@ -15,6 +16,9 @@ blogRouter
   .get(getAllBlogs)
   .post(passport.authenticate('jwt', { session: false }), postBlog);
 
+blogRouter
+  .route('/my_blogs')
+  .get(passport.authenticate('jwt', { session: false }), getMyBlogs);
 
 blogRouter
   .route('/:id')
