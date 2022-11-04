@@ -20,7 +20,7 @@ const BlogPost = new Schema(
       ref: 'User',
     },
     read_count: Number,
-    reading_time: String,
+    reading_time: Number,
     body: {
       type: String,
       required: [true, 'Please enter text in the body of your blog'],
