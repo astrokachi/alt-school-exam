@@ -164,7 +164,7 @@ paths:
               - example:
                   title: intro in backend
                   description: not much to say
-                  state: Published
+                  state: published
                   tags: sense
                   body: omo, i have nothing to say to you do your worse
             example:
@@ -251,7 +251,7 @@ paths:
         name: state
         schema:
           type: string
-        description: search state (Draft, Published)
+        description: search state (draft, published)
     get:
       tags:
       - logged in users
@@ -268,30 +268,14 @@ paths:
       servers:
       - url: https://blogs-api-v1.onrender.com
         variables: {}
-  # /blogs/my_blogs/{id}:
-  #   parameters:
-  #     - in: path
-  #       name: id
-  #       schema:
-  #         type: string
-  #       required: true
-  #       description: The user ID.
-  #   get:
-  #     tags:
-  #     - logged in users
-  #     summary: get a blog from my blogs
-  #     operationId: getablogfrommyblogs
-  #     parameters: []
-  #     responses:
-  #       '200':
-  #         description: ''
-  #         headers: {}
-  #     deprecated: false
-  #     security:
-  #     - bearer: []
-  #     servers:
-  #     - url: https://blogs-api-v1.onrender.com
-  #       variables: {}
+  /blogs/my_blogs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The user ID.
     patch:
       tags:
       - logged in users
