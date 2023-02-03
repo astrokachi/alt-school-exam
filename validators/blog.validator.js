@@ -6,8 +6,8 @@ const BlogSchema = Joi.object({
 	description: Joi.string().optional().trim(),
 	tags: Joi.string().trim(),
 	author: Joi.string().trim(),
-	read_count: Joi.number().min(0).trim(),
-	reading_time: Joi.number().trim().min(0),
+	read_count: Joi.number().min(0),
+	reading_time: Joi.number().min(0),
 	body: Joi.string().required().trim(),
 });
 

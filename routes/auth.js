@@ -4,7 +4,7 @@ const passport = require("passport");
 const {
 	signUpValidationMiddleware,
 	logInValidationMiddleware,
-} = require("../validation/user.validation");
+} = require("../validators/auth.validator");
 
 authRouter.post(
 	"/login",
