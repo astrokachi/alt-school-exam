@@ -4,7 +4,7 @@ info:
   contact: {}
   version: '1.0'
 servers:
-- url: https://blog-api-5ecs.onrender.com
+- url: https://blogs-api-v1.onrender.com
   variables: {}
 paths:
   /auth/signup:
@@ -42,7 +42,7 @@ paths:
       deprecated: false
       security: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
   /auth/login:
     post:
@@ -75,9 +75,9 @@ paths:
       deprecated: false
       security: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
-  /blog/all:
+  /blogs:
     parameters:
       - in: query
         name: page
@@ -122,9 +122,9 @@ paths:
       deprecated: false
       security: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
-  /blog/all/{id}:
+  /blogs/{id}:
     parameters:
       - in: path
         name: id
@@ -145,9 +145,9 @@ paths:
       deprecated: false
       security: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
-  /user/blog/create:
+  /blogs/create:
     post:
       tags:
       - logged in users
@@ -182,9 +182,9 @@ paths:
       security:
       - bearer: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
-  /user/blog/published:
+  /blogs/published:
     parameters:
       - in: query
         name: page
@@ -231,9 +231,9 @@ paths:
       security:
       - bearer: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
-  /user/blog/all:
+  /blogs/my_blogs:
     parameters:
       - in: query
         name: page
@@ -266,9 +266,9 @@ paths:
       security:
       - bearer: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
-  /user/blog/all/{id}:
+  /blogs/my_blogs/{id}:
     parameters:
       - in: path
         name: id
@@ -290,7 +290,7 @@ paths:
       security:
       - bearer: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
     patch:
       tags:
@@ -318,7 +318,7 @@ paths:
       security:
       - bearer: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
 
     delete:
@@ -335,7 +335,7 @@ paths:
       security:
       - bearer: []
       servers:
-      - url: https://blog-api-5ecs.onrender.com
+      - url: https://blogs-api-v1.onrender.com
         variables: {}
 components:
   schemas:
