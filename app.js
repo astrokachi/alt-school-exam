@@ -1,26 +1,25 @@
-require('dotenv').config();
-const express = require('express');
+const express = require("express");
+require("dotenv").config();
 const app = express();
-const authRouter = require('./routes/auth');
-const blogRouter = require('./routes/blogs');
-require('./middleware/authentication');
-require('express-async-errors');
-const errorHandler = require('./middleware/errorHandler');
+require("./middleware/authentication");
+require("express-async-errors");
+const authRouter = require("./routes/auth");
+const blogRouter = require("./routes/blogs");
 
 app.use(express.json());
+app.use("/auth", authRouter);
+app.use("/blogs", blogRouter);
 
-////////////////////////////////////////////// 0.041667d /////////////////////////////////////////////////////////////
-app.use('/auth', authRouter);
-app.use('/blogs', blogRouter);
-
-app.get('/', (req, res) => {
-  res.send('Welcome home');
+app.get("/", (req, res) => {
+	res.send("Welcome home");
 });
 
 app.use((req, res) => {
-  res.status(404).json({ message: 'page not found' });
+	res.status(404).json({ message: "page not found" });
 });
+
+const errorHandler = require("./middleware/errorHandler");
 
 app.use(errorHandler);
 
-module.exports = app
+module.exports = app;
