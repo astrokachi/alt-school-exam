@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const app = require("./app");
+const logger = require("./logger/logger");
 
 const PORT = process.env.PORT || 3334;
 
@@ -8,10 +9,10 @@ async function start() {
 		await mongoose.connect(process.env.MONGO_URI);
 
 		app.listen(PORT, () => {
-			console.log("server is listening on port", PORT);
+			logger.info(`server is listening on port, ${PORT}`);
 		});
 	} catch (error) {
-		console.log(error);
+		logger.error(error);
 	}
 }
 
