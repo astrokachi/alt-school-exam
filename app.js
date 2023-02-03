@@ -9,11 +9,11 @@ const blogRouter = require("./routes/blogs");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
-const swaggerUI = require('swagger-ui-express')
-const YAML = require('yamljs')
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 
 //swagger
-const swaggerDoc = YAML.load('./swagger.yaml')
+const swaggerDocument = YAML.load("./swagger.yaml");
 
 //middlewares
 app.use(cors());
@@ -39,11 +39,11 @@ app.use("/blogs", blogRouter);
 app.use(errorHandler);
 
 //swagger implementation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //index page
 app.get("/", (req, res) => {
-	res.send('<h1>Blogs API</h1><a href="/api-docs">Documentation</a>')
+	res.send('<h1>Blogs API</h1><a href="/api-docs">Documentation</a>');
 });
 
 app.use((req, res) => {
