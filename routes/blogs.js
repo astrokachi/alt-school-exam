@@ -10,12 +10,17 @@ const {
 	getBlog,
 	getMyBlogs,
 } = require("../controllers/blogs");
+const blogValidator = require("../validators/blog.validator");
 
 blogRouter.route("/").get(getAllBlogs);
 
 blogRouter
 	.route("/create")
-	.post(passport.authenticate("jwt", { session: false }), postBlog);
+	.post(
+		passport.authenticate("jwt", { session: false }),
+		blogValidator,
+		postBlog
+	);
 
 blogRouter
 	.route("/my_blogs")
@@ -24,7 +29,11 @@ blogRouter
 blogRouter
 	.route("my_blogs/:id")
 	.get(getBlog)
-	.patch(passport.authenticate("jwt", { session: false }), updateBlogPost)
+	.patch(
+		passport.authenticate("jwt", { session: false }),
+		blogValidator,
+		updateBlogPost
+	)
 	.delete(passport.authenticate("jwt", { session: false }), deleteBlogPost);
 
 module.exports = blogRouter;
