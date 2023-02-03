@@ -11,7 +11,7 @@ paths:
     post:
       tags:
       - Auth
-      summary: sign up user
+      summary: Sign up user
       operationId: signupuser
       parameters: []
       requestBody:
@@ -48,7 +48,7 @@ paths:
     post:
       tags:
       - Auth
-      summary: login user
+      summary: Login user
       operationId: loginuser
       parameters: []
       requestBody:
@@ -112,7 +112,7 @@ paths:
     get:
       tags:
       - Not logged in users
-      summary: get all published blog
+      summary: Get all blogs
       operationId: getallpublishedblog
       parameters: []
       responses:
@@ -135,7 +135,7 @@ paths:
     get:
       tags:
       - Not logged in users
-      summary: get a published blog
+      summary: Get a blog
       operationId: getapublishedblog
       parameters: []
       responses:
@@ -151,7 +151,7 @@ paths:
     post:
       tags:
       - logged in users
-      summary: create a blog
+      summary: Post a blog
       operationId: createablog
       parameters: []
       requestBody:
@@ -184,55 +184,55 @@ paths:
       servers:
       - url: https://blogs-api-v1.onrender.com
         variables: {}
-  /blogs/published:
-    parameters:
-      - in: query
-        name: page
-        schema:
-          type: integer
-        description: The page number to return
-      - in: query
-        name: per_page
-        schema:
-          type: integer
-        description: The numbers of blogs per page  to return
-      - in: query
-        name: order_by
-        schema:
-          type: string
-          default: -read_count
-        description: sort blogs by either(asc) or (-desc)?
-      - in: query
-        name: author
-        schema:
-          type: string
-        description: search blogs by author
-      - in: query
-        name: title
-        schema:
-          type: string
-        description: search blogs by title
-      - in: query
-        name: tags
-        schema:
-          type: string
-        description: search blogs by tags  
-    get:
-      tags:
-      - logged in users
-      summary: get all published blog (logged in user)
-      operationId: getallpublishedblog(loggedinuser)
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-      security:
-      - bearer: []
-      servers:
-      - url: https://blogs-api-v1.onrender.com
-        variables: {}
+  # /blogs/published:
+  #   parameters:
+  #     - in: query
+  #       name: page
+  #       schema:
+  #         type: integer
+  #       description: The page number to return
+  #     - in: query
+  #       name: per_page
+  #       schema:
+  #         type: integer
+  #       description: The numbers of blogs per page  to return
+  #     - in: query
+  #       name: order_by
+  #       schema:
+  #         type: string
+  #         default: -read_count
+  #       description: sort blogs by either(asc) or (-desc)?
+  #     - in: query
+  #       name: author
+  #       schema:
+  #         type: string
+  #       description: search blogs by author
+  #     - in: query
+  #       name: title
+  #       schema:
+  #         type: string
+  #       description: search blogs by title
+  #     - in: query
+  #       name: tags
+  #       schema:
+  #         type: string
+  #       description: search blogs by tags  
+  #   get:
+  #     tags:
+  #     - logged in users
+  #     summary: get all published blog (logged in user)
+  #     operationId: getallpublishedblog(loggedinuser)
+  #     parameters: []
+  #     responses:
+  #       '200':
+  #         description: ''
+  #         headers: {}
+  #     deprecated: false
+  #     security:
+  #     - bearer: []
+  #     servers:
+  #     - url: https://blogs-api-v1.onrender.com
+  #       variables: {}
   /blogs/my_blogs:
     parameters:
       - in: query
@@ -255,7 +255,7 @@ paths:
     get:
       tags:
       - logged in users
-      summary: get all my blogs
+      summary: Get my blogs
       operationId: getallmyblogs
       parameters: []
       responses:
@@ -268,34 +268,34 @@ paths:
       servers:
       - url: https://blogs-api-v1.onrender.com
         variables: {}
-  /blogs/my_blogs/{id}:
-    parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-        required: true
-        description: The user ID.
-    get:
-      tags:
-      - logged in users
-      summary: get a blog from my blogs
-      operationId: getablogfrommyblogs
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-      security:
-      - bearer: []
-      servers:
-      - url: https://blogs-api-v1.onrender.com
-        variables: {}
+  # /blogs/my_blogs/{id}:
+  #   parameters:
+  #     - in: path
+  #       name: id
+  #       schema:
+  #         type: string
+  #       required: true
+  #       description: The user ID.
+  #   get:
+  #     tags:
+  #     - logged in users
+  #     summary: get a blog from my blogs
+  #     operationId: getablogfrommyblogs
+  #     parameters: []
+  #     responses:
+  #       '200':
+  #         description: ''
+  #         headers: {}
+  #     deprecated: false
+  #     security:
+  #     - bearer: []
+  #     servers:
+  #     - url: https://blogs-api-v1.onrender.com
+  #       variables: {}
     patch:
       tags:
       - logged in users
-      summary: update a blog on my blogs
+      summary: Update my blog
       operationId: updateablogonmyblogs
       parameters: []
       requestBody:
@@ -324,7 +324,7 @@ paths:
     delete:
       tags:
       - logged in users
-      summary: delete a blog
+      summary: Delete my blog
       operationId: deleteablog
       parameters: []
       responses:
@@ -340,7 +340,7 @@ paths:
 components:
   schemas:
     createablogrequest:
-      title: createablogrequest
+      title: create a blog
       required:
       - title
       - description
@@ -366,7 +366,7 @@ components:
         tags: sense
         body: omo, i have nothing to say to you do your worse
     updateablogonmyblogsrequest:
-      title: updateablogonmyblogsrequest
+      title: update my blog
       required:
       - read_count
       type: object
@@ -377,7 +377,7 @@ components:
       example:
         read_count: 4
     deleteablogrequest:
-      title: deleteablogrequest
+      title: delete my blog
       required:
       - read_count
       type: object
