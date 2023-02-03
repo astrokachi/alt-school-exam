@@ -9,7 +9,13 @@ const blogRouter = require("./routes/blogs");
 const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const swaggerUI = require('swagger-ui-express')
+const YAML = require('yamljs')
 
+//swagger
+const swaggerDoc = YAML.load('./swagger.yaml')
+
+//middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -25,13 +31,19 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests
 app.use(limiter);
 
+//base routes
 app.use("/auth", authRouter);
 app.use("/blogs", blogRouter);
 
+//error handler
 app.use(errorHandler);
 
+//swagger implementation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+//index page
 app.get("/", (req, res) => {
-	res.send("Welcome home");
+	res.send('<h1>Blogs API</h1><a href="/api-docs">Documentation</a>')
 });
 
 app.use((req, res) => {
