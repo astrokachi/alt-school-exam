@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 require("./middleware/authentication");
+const errorHandler = require("./middleware/errorHandler");
 require("express-async-errors");
 const authRouter = require("./routes/auth");
 const blogRouter = require("./routes/blogs");
@@ -27,6 +28,8 @@ app.use(limiter);
 app.use("/auth", authRouter);
 app.use("/blogs", blogRouter);
 
+app.use(errorHandler);
+
 app.get("/", (req, res) => {
 	res.send("Welcome home");
 });
@@ -34,9 +37,5 @@ app.get("/", (req, res) => {
 app.use((req, res) => {
 	res.status(404).json({ message: "page not found" });
 });
-
-const errorHandler = require("./middleware/errorHandler");
-
-app.use(errorHandler);
 
 module.exports = app;
